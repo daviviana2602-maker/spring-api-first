@@ -15,24 +15,24 @@ public class CriarProdutoService {
     public CriarProdutoResponse criarNovoProduto(String nome, Double preco, int quantidade) {
 
 
-        if (nome.isBlank() && nome.matches("[a-zA-Z]+")) {
+        if (nome.isBlank()) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST
             );
         }
 
-        else if (preco > 5000 || preco <= 0) {
+        if (preco > 5000 || preco <= 0) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST
             );
         }
 
-        else if (quantidade <= 0 || quantidade > 100) {
+        if (quantidade <= 0 || quantidade > 100) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST
             );
         }
-        
+
         int id = 0;
 
         for (ProdutoEntity produto : PRODUTOS) {
@@ -41,9 +41,9 @@ public class CriarProdutoService {
                 id = produto.getId();
             }
 
-            id += 1;
-
         }
+
+        id += 1;
 
 
         ProdutoEntity produto = new ProdutoEntity(id, nome, preco, quantidade);
