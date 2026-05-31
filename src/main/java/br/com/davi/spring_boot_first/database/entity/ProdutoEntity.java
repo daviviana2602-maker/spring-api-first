@@ -6,15 +6,15 @@ import lombok.*;
 @Getter
 @Setter
 
+@AllArgsConstructor
+
 @Builder    // Permite criar objetos usando o padrão Builder (tipo pra popular)
 
 
 // representa o modelo interno do sistema (geralmente banco)
 public class ProdutoEntity {
-
     private int id;
     private String nome;
-    private Double preco;
-    private Integer quantidade;
-
+    private double preco;
+    private int quantidade;
 }

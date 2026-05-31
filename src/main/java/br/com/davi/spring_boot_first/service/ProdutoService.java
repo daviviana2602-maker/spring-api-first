@@ -2,6 +2,8 @@ package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,7 +11,8 @@ import java.util.List;
 public class ProdutoService {   // @Service faz o Spring criar: ProdutoService produtoService = new ProdutoService(); (um Bean)
 
     // criando lista (banco fake)
-    public static final List<ProdutoEntity> PRODUTOS = List.of(
+    public static final List<ProdutoEntity> PRODUTOS = new ArrayList<>(
+        List.of(
             ProdutoEntity.builder()
                     .id(1)
                     .nome("celular")
@@ -28,7 +31,7 @@ public class ProdutoService {   // @Service faz o Spring criar: ProdutoService p
                     .preco(187.90)
                     .quantidade(15)
                     .build()
-    );
+    ));
 
     // função que lista o "banco" e retorna (chamada no controller)
     public List<ProdutoEntity> getProdutos() {
