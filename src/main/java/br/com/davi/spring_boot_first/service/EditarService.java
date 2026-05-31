@@ -22,10 +22,11 @@ public class EditarService {
                     );
                 }
 
+                String nome = produto.getNome();
                 quantidade += produto.getQuantidade();
                 produto.setQuantidade(quantidade);
 
-                return new ProdutoResponse(id, quantidade);     // Retornando dto com AllArgsConstructor
+                return new ProdutoResponse(id, nome, quantidade);     // Retornando dto com AllArgsConstructor
             }
         }
 

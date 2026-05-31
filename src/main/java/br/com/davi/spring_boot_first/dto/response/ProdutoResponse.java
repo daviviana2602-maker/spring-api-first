@@ -11,5 +11,6 @@ import lombok.*;
 // O que a API devolve/retorna
 public class ProdutoResponse {
     private int id;
+    private String nome;
     private int quantidade;
 }
