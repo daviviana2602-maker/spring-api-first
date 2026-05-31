@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public class ProdutoService {   // @Service faz o Spring criar: ProdutoService produtoService = new ProdutoService(); (um Bean)
 
+    // criando lista (banco fake)
     public static final List<ProdutoEntity> PRODUTOS = List.of(
             ProdutoEntity.builder()
                     .id(1)
@@ -29,6 +30,7 @@ public class ProdutoService {   // @Service faz o Spring criar: ProdutoService p
                     .build()
     );
 
+    // função que lista o "banco" e retorna (chamada no controller)
     public List<ProdutoEntity> getProdutos() {
         return PRODUTOS;
     }

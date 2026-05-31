@@ -1,6 +1,8 @@
 package br.com.davi.spring_boot_first.controllers;
 
 import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
+import br.com.davi.spring_boot_first.dto.request.ProdutoRequest;
+import br.com.davi.spring_boot_first.dto.response.ProdutoResponse;
 import br.com.davi.spring_boot_first.service.EditarService;
 import br.com.davi.spring_boot_first.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +18,24 @@ import java.util.List;
 public class ProdutoController {
 
 
-    private final ProdutoService produtoService;    // produtoService é o retorno da classe ProdutoService
+    private final ProdutoService produtoService;    // objeto do ProdutoService fornecido pelo Spring
+    private final EditarService editarService;      // objeto do EditarService fornecido pelo Spring
 
 
     @GetMapping("/listar")
     public List<ProdutoEntity> listar(){
-        return produtoService.getProdutos();    // retorna a resposta do getProdutos
+        return produtoService.getProdutos();
     }
 
 
     @PutMapping("/editar")
-    public int editarQuantidade(@RequestParam(value = "id") int id, @RequestParam(value = "quantidade") int quantidade){
-        return EditarService.editar(id, quantidade);
+    public ProdutoResponse editarQuantidade(
+            @RequestBody ProdutoRequest produtoRequest  // dados da requisição convertidos para objeto
+    )
+    {
+        return editarService.editar(        // passando parametros
+                produtoRequest.getId(),
+                produtoRequest.getQuantidade());
     }
 
 
