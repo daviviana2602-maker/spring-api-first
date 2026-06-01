@@ -5,11 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 
-@AllArgsConstructor // permite construir no formato de entity ou DTO passando argumentos necessários
+@AllArgsConstructor
 
 
-// O que a API devolve/retorna
-public class ProdutoResponse {
+public class EditarProdutoResponse {
     private int id;
     private String nome;
     private int quantidade;

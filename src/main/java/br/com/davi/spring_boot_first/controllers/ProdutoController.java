@@ -2,9 +2,9 @@ package br.com.davi.spring_boot_first.controllers;
 
 import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.dto.request.CriarProdutoRequest;
-import br.com.davi.spring_boot_first.dto.request.ProdutoRequest;
+import br.com.davi.spring_boot_first.dto.request.EditarProdutoRequest;
 import br.com.davi.spring_boot_first.dto.response.CriarProdutoResponse;
-import br.com.davi.spring_boot_first.dto.response.ProdutoResponse;
+import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
 import br.com.davi.spring_boot_first.service.CriarProdutoService;
 import br.com.davi.spring_boot_first.service.EditarService;
 import br.com.davi.spring_boot_first.service.ProdutoService;
@@ -33,13 +33,13 @@ public class ProdutoController {
 
 
     @PutMapping("/editar")
-    public ProdutoResponse editarQuantidade(
-        @RequestBody ProdutoRequest produtoRequest      // dados da requisição convertidos para objeto
+    public EditarProdutoResponse editarQuantidade(
+            @RequestBody EditarProdutoRequest editarProdutoRequest      // dados da requisição convertidos para objeto
     )
     {
         return editarService.editar(
-            produtoRequest.getId(),
-            produtoRequest.getQuantidade());
+            editarProdutoRequest.getId(),
+            editarProdutoRequest.getQuantidade());
     }
 
 

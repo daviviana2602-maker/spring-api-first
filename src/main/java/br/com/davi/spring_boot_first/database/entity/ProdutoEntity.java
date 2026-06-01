@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 
-@AllArgsConstructor
+@AllArgsConstructor    // permite construir no formato de entity ou DTO passando argumentos necessários
 
 @Builder    // Permite criar objetos usando o padrão Builder (tipo pra popular)
 

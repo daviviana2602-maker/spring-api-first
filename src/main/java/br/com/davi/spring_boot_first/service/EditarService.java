@@ -1,7 +1,7 @@
 package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
-import br.com.davi.spring_boot_first.dto.response.ProdutoResponse;
+import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,13 +10,13 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class EditarService {
 
-    public ProdutoResponse editar(int id, int quantidade) {
+    public EditarProdutoResponse editar(int id, int quantidade) {
 
         for (ProdutoEntity produto : ProdutoService.PRODUTOS) {
 
             if (produto.getId() == id) {
 
-                if (quantidade + produto.getQuantidade() < 0)  {
+                if (quantidade + produto.getQuantidade() < 0 || quantidade > 100)  {
                     throw new ResponseStatusException(
                             HttpStatus.BAD_REQUEST
                     );
@@ -26,7 +26,7 @@ public class EditarService {
                 quantidade += produto.getQuantidade();
                 produto.setQuantidade(quantidade);
 
-                return new ProdutoResponse(id, nome, quantidade);     // Retornando dto com AllArgsConstructor
+                return new EditarProdutoResponse(id, nome, quantidade);     // Retornando dto com AllArgsConstructor
             }
         }
 

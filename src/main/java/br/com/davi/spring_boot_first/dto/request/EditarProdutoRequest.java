@@ -6,8 +6,7 @@ import lombok.*;
 @Setter
 
 
-// o que o usuário envia (tipo Schema)
-public class ProdutoRequest {
+public class EditarProdutoRequest {
         private int id;
         private int quantidade;
     }
