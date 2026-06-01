@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 
@@ -11,8 +13,8 @@ import lombok.Setter;
 
 
 public class CriarProdutoResponse {
-    private int id;
+    private Long id;
     private String nome;
-    private double preco;
-    private int quantidade;
+    private BigDecimal preco;
+    private Integer quantidade;
 }

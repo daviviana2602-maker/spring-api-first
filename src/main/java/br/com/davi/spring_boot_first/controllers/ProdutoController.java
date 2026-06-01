@@ -6,8 +6,8 @@ import br.com.davi.spring_boot_first.dto.request.EditarProdutoRequest;
 import br.com.davi.spring_boot_first.dto.response.CriarProdutoResponse;
 import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
 import br.com.davi.spring_boot_first.service.CriarProdutoService;
-import br.com.davi.spring_boot_first.service.EditarService;
-import br.com.davi.spring_boot_first.service.ProdutoService;
+import br.com.davi.spring_boot_first.service.EditarProdutoService;
+import br.com.davi.spring_boot_first.service.ListarProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,15 +20,15 @@ import java.util.List;
 
 public class ProdutoController {
 
-
-    private final ProdutoService produtoService;                // objeto do ProdutoService fornecido pelo Spring
-    private final EditarService editarService;                  // objeto do EditarService fornecido pelo Spring
-    private final CriarProdutoService criarProdutoService;      // objeto do CriarProdutoService fornecido pelo Spring
+    // Solicitando Objetos (beans) dos Services já criados pelo Spring na inicialização
+    private final ListarProdutoService listarProdutoService;
+    private final EditarProdutoService editarService;
+    private final CriarProdutoService criarProdutoService;
 
 
     @GetMapping("/listar")
     public List<ProdutoEntity> listar(){
-        return produtoService.getProdutos();
+        return listarProdutoService.listarTodos();
     }
 
 

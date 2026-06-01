@@ -7,6 +7,6 @@ import lombok.*;
 
 
 public class EditarProdutoRequest {
-        private int id;
-        private int quantidade;
+        private Long id;
+        private Integer quantidade;
     }
