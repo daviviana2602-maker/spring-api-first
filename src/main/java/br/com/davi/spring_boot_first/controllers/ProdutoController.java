@@ -8,6 +8,7 @@ import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
 import br.com.davi.spring_boot_first.service.CriarProdutoService;
 import br.com.davi.spring_boot_first.service.EditarProdutoService;
 import br.com.davi.spring_boot_first.service.ListarProdutoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -34,18 +35,20 @@ public class ProdutoController {
 
     @PutMapping("/editar")
     public EditarProdutoResponse editarQuantidade(
-            @RequestBody EditarProdutoRequest editarProdutoRequest      // dados da requisição convertidos para objeto
+        @RequestBody EditarProdutoRequest editarProdutoRequest      // dados da requisição convertidos para objeto
     )
     {
         return editarService.editar(
             editarProdutoRequest.getId(),
+            editarProdutoRequest.getNome(),
+            editarProdutoRequest.getPreco(),
             editarProdutoRequest.getQuantidade());
     }
 
 
     @PostMapping("/criar")
     public CriarProdutoResponse criarProduto(
-        @RequestBody CriarProdutoRequest criarProdutoRequest      // dados da requisição convertidos para objeto
+        @Valid @RequestBody CriarProdutoRequest criarProdutoRequest      // dados da requisição convertidos para objeto
     )
     {
         return criarProdutoService.criarNovoProduto(

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+
 
 @Service
 public class EditarProdutoService {
@@ -22,35 +24,61 @@ public class EditarProdutoService {
     }
 
 
-    public EditarProdutoResponse editar(long id, int quantidade) {
-
-        for (ProdutoEntity produto : produtoRepository.findAll()) {
-
-            if (produto.getId() == id) {
-
-                if (quantidade + produto.getQuantidade() < 0 || quantidade > 100)  {
-                    throw new ResponseStatusException(
-                            HttpStatus.BAD_REQUEST
-                    );
-                }
-
-                quantidade += produto.getQuantidade();
-                produto.setQuantidade(quantidade);
+    public ProdutoEntity buscarPorId(Long id) {
+        return produtoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
 
 
-                return new EditarProdutoResponse(
-                        produto.getId(),
-                        produto.getNome(),
-                        produto.getQuantidade()
+    public EditarProdutoResponse editar(
+            long id,
+            String nome,
+            BigDecimal preco,
+            Integer quantidade) {
+
+
+        ProdutoEntity produto = buscarPorId(id);
+
+
+        if (nome != null) {
+            if (nome.length() < 3 || nome.length() > 50) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST
                 );
             }
+            produto.setNome(nome);
         }
 
-        throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND
+
+        if (quantidade != null) {
+            if (quantidade + produto.getQuantidade() < 0 || quantidade > 100) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+            quantidade += produto.getQuantidade();
+            produto.setQuantidade(quantidade);
+        }
+
+
+        if (preco != null) {
+            if (preco.compareTo(BigDecimal.valueOf(5000)) >= 0 || preco.compareTo(BigDecimal.ZERO) <= 0) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+            produto.setPreco(preco);
+        }
+
+
+        produtoRepository.save(produto);
+
+        return new EditarProdutoResponse(
+                produto.getId(),
+                produto.getNome(),
+                produto.getPreco(),
+                produto.getQuantidade()
         );
 
     }
 }
-
-
