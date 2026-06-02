@@ -17,14 +17,13 @@ public class EditarProdutoService {
     private final ProdutoRepository produtoRepository;     // declarando o campo da classe (declarado mas ainda sem valor)
 
 
-    // construtor tem o mesmo nome da classe e NÃO tem tipo de retorno
     // o construtor recebe o objeto pronto do Spring (ponto onde o Spring injeta o objeto)
     public EditarProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;     // atribui ao campo da classe
     }
 
 
-    public ProdutoEntity buscarPorId(Long id) {
+    private ProdutoEntity buscarPorId(Long id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
     }

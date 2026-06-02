@@ -15,7 +15,6 @@ public class CriarProdutoService {
     private final ProdutoRepository produtoRepository;     // declarando o campo da classe (declarado mas ainda sem valor)
 
 
-    // construtor tem o mesmo nome da classe e NÃO tem tipo de retorno
     // o construtor recebe o objeto pronto do Spring (ponto onde o Spring injeta o objeto)
     public CriarProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;     // atribui ao campo da classe

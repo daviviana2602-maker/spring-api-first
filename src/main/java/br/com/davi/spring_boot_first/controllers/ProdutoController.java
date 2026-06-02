@@ -6,6 +6,7 @@ import br.com.davi.spring_boot_first.dto.request.EditarProdutoRequest;
 import br.com.davi.spring_boot_first.dto.response.CriarProdutoResponse;
 import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
 import br.com.davi.spring_boot_first.service.CriarProdutoService;
+import br.com.davi.spring_boot_first.service.DeletarProdutoService;
 import br.com.davi.spring_boot_first.service.EditarProdutoService;
 import br.com.davi.spring_boot_first.service.ListarProdutoService;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ public class ProdutoController {
     private final ListarProdutoService listarProdutoService;
     private final EditarProdutoService editarService;
     private final CriarProdutoService criarProdutoService;
+    private final DeletarProdutoService deletarProdutoService;
 
 
     @GetMapping("/listar")
@@ -55,6 +57,15 @@ public class ProdutoController {
             criarProdutoRequest.getName(),
             criarProdutoRequest.getPreco(),
             criarProdutoRequest.getQuantidade());
+    }
+
+
+    @DeleteMapping("/{id}")
+    public Long removerProduto(
+        @PathVariable Long id
+    )
+    {
+        return deletarProdutoService.deletarProduto(id);
     }
 
 }
