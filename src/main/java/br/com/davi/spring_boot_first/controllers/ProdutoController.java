@@ -16,8 +16,8 @@ import java.util.List;
 
 
 
-@RestController   // diz que é uma API REST (retorna JSON direto)
-@RequestMapping("/v1/produto")    // prefix com versão
+@RestController
+@RequestMapping("/v1/produto")
 @RequiredArgsConstructor    // Pega todos os private final e joga dentro do construtor
 
 
@@ -32,7 +32,7 @@ public class ProdutoController {
 
     @PostMapping("/criar")
     public CriarProdutoResponse criarProduto(
-            @Valid @RequestBody CriarProdutoRequest criarProdutoRequest      // dados da requisição convertidos para objeto
+            @Valid @RequestBody CriarProdutoRequest criarProdutoRequest
     )
     {
         return criarProdutoService.criarNovoProduto(
@@ -50,7 +50,7 @@ public class ProdutoController {
 
     @PutMapping("/editar")
     public EditarProdutoResponse editarQuantidade(
-        @RequestBody EditarProdutoRequest editarProdutoRequest      // dados da requisição convertidos para objeto
+        @RequestBody EditarProdutoRequest editarProdutoRequest
     )
     {
         return editarProdutoService.editar(

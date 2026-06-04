@@ -12,12 +12,11 @@ import java.math.BigDecimal;
 @Service
 public class CriarProdutoService {
 
-    private final ProdutoRepository produtoRepository;     // declarando o campo da classe (declarado mas ainda sem valor)
+    private final ProdutoRepository produtoRepository;
 
 
-    // o construtor recebe o objeto pronto do Spring (ponto onde o Spring injeta o objeto)
     public CriarProdutoService(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;     // atribui ao campo da classe
+        this.produtoRepository = produtoRepository;
     }
 
 

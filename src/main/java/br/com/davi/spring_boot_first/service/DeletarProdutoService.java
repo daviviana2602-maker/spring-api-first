@@ -10,12 +10,11 @@ import org.springframework.stereotype.Service;
 public class DeletarProdutoService {
 
 
-    private final ProdutoRepository produtoRepository;     // declarando o campo da classe (declarado mas ainda sem valor)
+    private final ProdutoRepository produtoRepository;
 
 
-    // o construtor recebe o objeto pronto do Spring (ponto onde o Spring injeta o objeto)
     public DeletarProdutoService(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;     // atribui ao campo da classe
+        this.produtoRepository = produtoRepository;
     }
 
 
