@@ -1,6 +1,5 @@
 package br.com.davi.spring_boot_first.controllers;
 
-import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.dto.request.CriarProdutoRequest;
 import br.com.davi.spring_boot_first.dto.request.EditarProdutoRequest;
 import br.com.davi.spring_boot_first.dto.response.CriarProdutoResponse;

@@ -1,4 +1,4 @@
-package br.com.davi.spring_boot_first.database.entity;
+package br.com.davi.spring_boot_first.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 
 @Entity
-@Table(name = "produtos")
+@Table(name = "usuarios")
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 
 
-public class ProdutoEntity {
+public class UsuarioEntity {
 
     @Id     // mostra que é a chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,5 @@ public class ProdutoEntity {
     private String nome;
 
     @Column(nullable = false)
-    private BigDecimal preco;   // precisão exata, não perde casas decimais
-
-    @Column(nullable = false)
-    private Integer quantidade;
+    private String senha;
 }
