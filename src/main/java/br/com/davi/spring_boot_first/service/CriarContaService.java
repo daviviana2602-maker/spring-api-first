@@ -3,6 +3,8 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.dto.response.CriarContaResponse;
 import br.com.davi.spring_boot_first.entity.UsuarioEntity;
 import br.com.davi.spring_boot_first.repository.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,10 +12,12 @@ public class CriarContaService {
 
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public CriarContaService(UsuarioRepository usuarioRepository) {
+    public CriarContaService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -24,7 +28,10 @@ public class CriarContaService {
 
         usuario.setNome(nome);
         usuario.setEmail(email);
-        usuario.setSenha(senha);
+
+        String senhaHash = passwordEncoder.encode(senha);
+        usuario.setSenha(senhaHash);
+
 
         usuarioRepository.save(usuario);
 

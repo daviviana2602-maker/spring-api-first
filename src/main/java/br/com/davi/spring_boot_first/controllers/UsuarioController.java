@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class UsuarioController {
 
-
     private final CriarContaService criarContaService;
     private final LoginService loginService;
-
 
 
     @PostMapping("/criar")
@@ -50,7 +48,5 @@ public class UsuarioController {
             loginRequest.getSenha()
         );
     }
-
-
 
 }
