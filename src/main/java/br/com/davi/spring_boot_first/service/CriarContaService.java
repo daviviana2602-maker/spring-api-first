@@ -17,12 +17,13 @@ public class CriarContaService {
     }
 
 
-    public CriarContaResponse criarConta(String nome, String senha){
+    public CriarContaResponse criarConta(String nome, String email, String senha){
 
 
         UsuarioEntity usuario = new UsuarioEntity();
 
         usuario.setNome(nome);
+        usuario.setEmail(email);
         usuario.setSenha(senha);
 
         usuarioRepository.save(usuario);
@@ -30,7 +31,8 @@ public class CriarContaService {
 
         return new CriarContaResponse(
             usuario.getId(),
-            usuario.getNome()
+            usuario.getNome(),
+            usuario.getEmail()
         );
 
     }

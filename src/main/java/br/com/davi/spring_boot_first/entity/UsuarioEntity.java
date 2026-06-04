@@ -1,9 +1,8 @@
 package br.com.davi.spring_boot_first.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
-
-import java.math.BigDecimal;
 
 
 @Entity
@@ -21,8 +20,11 @@ public class UsuarioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nome;
+
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String senha;

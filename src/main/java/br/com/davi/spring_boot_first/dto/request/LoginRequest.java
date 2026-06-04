@@ -1,5 +1,6 @@
 package br.com.davi.spring_boot_first.dto.request;
 
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,17 +11,13 @@ import lombok.Setter;
 @Setter
 
 
-public class CriarContaRequest {
+public class LoginRequest {
 
     @NotBlank
     @Email
-    String email;
+    private String email;
 
     @NotBlank
     @Size(min = 3, max = 50)
-    String nome;
-
-    @NotBlank
-    @Size(min = 3, max = 50)
-    String senha;
+    private String senha;
 }

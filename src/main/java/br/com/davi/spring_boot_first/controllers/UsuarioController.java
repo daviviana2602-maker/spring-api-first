@@ -1,8 +1,11 @@
 package br.com.davi.spring_boot_first.controllers;
 
 import br.com.davi.spring_boot_first.dto.request.CriarContaRequest;
+import br.com.davi.spring_boot_first.dto.request.LoginRequest;
 import br.com.davi.spring_boot_first.dto.response.CriarContaResponse;
+import br.com.davi.spring_boot_first.dto.response.LoginResponse;
 import br.com.davi.spring_boot_first.service.CriarContaService;
+import br.com.davi.spring_boot_first.service.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +23,7 @@ public class UsuarioController {
 
 
     private final CriarContaService criarContaService;
+    private final LoginService loginService;
 
 
 
@@ -30,10 +34,22 @@ public class UsuarioController {
     {
         return criarContaService.criarConta(
             criarContaRequest.getNome(),
+            criarContaRequest.getEmail(),
             criarContaRequest.getSenha()
         );
     }
 
+
+    @PostMapping("/login")
+        public LoginResponse login(
+            @Valid @RequestBody LoginRequest loginRequest
+    )
+    {
+        return loginService.realizarLogin(
+            loginRequest.getEmail(),
+            loginRequest.getSenha()
+        );
+    }
 
 
 
