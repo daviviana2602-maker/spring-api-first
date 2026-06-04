@@ -2,6 +2,7 @@ package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.database.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.database.repository.ProdutoRepository;
+import br.com.davi.spring_boot_first.dto.response.ListarProdutoResponse;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -18,8 +19,19 @@ public class ListarProdutoService {
     }
 
 
-    public List<ProdutoEntity> listarTodos() {
-        return produtoRepository.findAll();
-    }
+    public List<ListarProdutoResponse> listarProdutos() {
+
+        List<ProdutoEntity> produtos = produtoRepository.findAll();
+
+        return produtos.stream()    // passa por cada item da lista em sequência
+            .map(produto -> new ListarProdutoResponse(  // transforma Entity em Response
+                produto.getId(),
+                produto.getNome(),
+                produto.getPreco(),
+                produto.getQuantidade()
+            ))
+            .toList();  // chama o stream e insere itens passados na lista
+
+        }
 
 }

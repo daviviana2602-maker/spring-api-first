@@ -29,11 +29,7 @@ public class EditarProdutoService {
     }
 
 
-    public EditarProdutoResponse editar(
-            long id,
-            String nome,
-            BigDecimal preco,
-            Integer quantidade) {
+    public EditarProdutoResponse editar(long id, String nome, BigDecimal preco, Integer quantidade) {
 
 
         ProdutoEntity produto = buscarPorId(id);
