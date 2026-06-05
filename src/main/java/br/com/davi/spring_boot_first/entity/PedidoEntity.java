@@ -1,5 +1,6 @@
 package br.com.davi.spring_boot_first.entity;
 
+import br.com.davi.spring_boot_first.enums.PedidoStatusEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class PedidoEntity {
     @Column(nullable = false)
     private BigDecimal preco  = BigDecimal.ZERO;   // precisão exata, não perde casas decimais
 
+    @Enumerated(EnumType.STRING)    // salvar como TEXTO (nome do enum), não como número
     @Column(nullable = false)
-    private String status;
+    private PedidoStatusEnum status;
 }

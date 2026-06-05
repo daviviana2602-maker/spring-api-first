@@ -3,6 +3,7 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.dto.response.PedidoResponse;
 import br.com.davi.spring_boot_first.entity.PedidoEntity;
 import br.com.davi.spring_boot_first.entity.UsuarioEntity;
+import br.com.davi.spring_boot_first.enums.PedidoStatusEnum;
 import br.com.davi.spring_boot_first.repository.PedidoRepository;
 import br.com.davi.spring_boot_first.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class CriarPedidoService {
 
         for (PedidoEntity p : produtos){
 
-            if (p.getStatus().equals("pendente")) {
+            if (p.getStatus().equals("PENDENTE")) {
 
                 throw new ResponseStatusException(
                         HttpStatus.CONFLICT
@@ -54,7 +55,7 @@ public class CriarPedidoService {
 
 
         pedido.setUsuarioId(usuario.getId());
-        pedido.setStatus("pendente");
+        pedido.setStatus(PedidoStatusEnum.PENDENTE);
 
         pedidoRepository.save(pedido);
 
