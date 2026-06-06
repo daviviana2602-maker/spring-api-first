@@ -4,6 +4,7 @@ package br.com.davi.spring_boot_first.controllers;
 import br.com.davi.spring_boot_first.dto.request.CarrinhoRequest;
 import br.com.davi.spring_boot_first.dto.response.CarrinhoResponse;
 import br.com.davi.spring_boot_first.dto.response.PedidoResponse;
+import br.com.davi.spring_boot_first.service.CancelarPedidoService;
 import br.com.davi.spring_boot_first.service.CarrinhoService;
 import br.com.davi.spring_boot_first.service.CriarPedidoService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,10 @@ public class PedidoController {
 
     private final CriarPedidoService criarPedidoService;
     private final CarrinhoService carrinhoService;
+    private final CancelarPedidoService cancelarPedidoService;
 
 
-    @PostMapping("/{usuarioId}")
+    @PostMapping("/criar/{usuarioId}")
     public PedidoResponse gerarPedido(
         @PathVariable Long usuarioId
     )
@@ -40,6 +42,15 @@ public class PedidoController {
             carrinhoRequest.getProdutoId(),
             carrinhoRequest.getQuantidade()
         );
+    }
+
+
+    @PostMapping("/cancelar/{pedidoId}")
+    public Long excluirPedido(
+        @PathVariable Long pedidoId
+    )
+    {
+        return cancelarPedidoService.cancelarPedido(pedidoId);
     }
 
 

@@ -4,6 +4,7 @@ import br.com.davi.spring_boot_first.dto.response.CarrinhoResponse;
 import br.com.davi.spring_boot_first.entity.CarrinhoEntity;
 import br.com.davi.spring_boot_first.entity.PedidoEntity;
 import br.com.davi.spring_boot_first.entity.ProdutoEntity;
+import br.com.davi.spring_boot_first.enums.PedidoStatusEnum;
 import br.com.davi.spring_boot_first.repository.CarrinhoRepository;
 import br.com.davi.spring_boot_first.repository.PedidoRepository;
 import br.com.davi.spring_boot_first.repository.ProdutoRepository;
@@ -51,9 +52,16 @@ public class CarrinhoService {
 
     public CarrinhoResponse editarCarrinho(Long pedidoId, Long produtoId, Integer quantidade) {
 
-        buscarPedidoId(pedidoId);   // valida se pedido existe
+        PedidoEntity pedido = buscarPedidoId(pedidoId);   // valida se pedido existe
+
+        if (pedido.getStatus() == PedidoStatusEnum.CANCELADO || pedido.getStatus() == PedidoStatusEnum.CONCLUIDO) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT
+            );
+        }
 
         ProdutoEntity produto = buscarProdutoId(produtoId);
+
 
         Optional<CarrinhoEntity> item = buscarItemId(pedidoId, produtoId);
 
