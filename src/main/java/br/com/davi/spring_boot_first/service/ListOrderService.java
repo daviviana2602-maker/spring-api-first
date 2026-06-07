@@ -19,12 +19,12 @@ public class ListOrderService {
     }
 
 
-    public List<CartResponse> listarItens(Long orderId) {
+    public List<CartResponse> listItems(Long orderId) {
 
-        List<CartEntity> carrinho = cartRepository.findByOrderId(orderId);
+        List<CartEntity> cart = cartRepository.findByOrderId(orderId);
 
 
-        return carrinho.stream()
+        return cart.stream()
                 .map(item -> new CartResponse(
                         item.getId(),
                         item.getOrderId(),

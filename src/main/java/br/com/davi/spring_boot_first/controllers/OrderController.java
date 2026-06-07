@@ -68,11 +68,11 @@ public class OrderController {
 
 
     @GetMapping("/listar/{orderId}")
-    public List<CartResponse> listItems(
+    public List<CartResponse> listOrder(
         @PathVariable Long orderId
     )
     {
-        return listOrderService.listarItens(orderId);
+        return listOrderService.listItems(orderId);
     }
 
 
