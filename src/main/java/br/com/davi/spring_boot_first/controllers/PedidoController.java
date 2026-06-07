@@ -5,10 +5,8 @@ import br.com.davi.spring_boot_first.dto.request.CarrinhoRequest;
 import br.com.davi.spring_boot_first.dto.response.CarrinhoResponse;
 import br.com.davi.spring_boot_first.dto.response.ConcluirPedidoResponse;
 import br.com.davi.spring_boot_first.dto.response.PedidoResponse;
-import br.com.davi.spring_boot_first.service.CancelarPedidoService;
-import br.com.davi.spring_boot_first.service.CarrinhoService;
-import br.com.davi.spring_boot_first.service.ConcluirPedidoService;
-import br.com.davi.spring_boot_first.service.CriarPedidoService;
+import br.com.davi.spring_boot_first.service.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +24,7 @@ public class PedidoController {
     private final CarrinhoService carrinhoService;
     private final CancelarPedidoService cancelarPedidoService;
     private final ConcluirPedidoService concluirPedidoService;
+    private final ListarItensPedidoService listarItensPedidoService;
 
 
     @PostMapping("/criar/{usuarioId}")
@@ -39,7 +38,7 @@ public class PedidoController {
 
     @PostMapping("/itens")
     public CarrinhoResponse Carrinho(
-        @RequestBody CarrinhoRequest carrinhoRequest
+        @Valid @RequestBody CarrinhoRequest carrinhoRequest
     )
     {
         return carrinhoService.editarCarrinho(
@@ -61,10 +60,19 @@ public class PedidoController {
 
     @PostMapping("/concluir/{pedidoId}")
     public List<ConcluirPedidoResponse> realizarPedido(
-            @PathVariable Long pedidoId
+        @PathVariable Long pedidoId
     )
     {
         return concluirPedidoService.concluirPedido(pedidoId);
+    }
+
+
+    @GetMapping("/listar/{pedidoId}")
+    public List<CarrinhoResponse> listarItens(
+        @PathVariable Long pedidoId
+    )
+    {
+        return listarItensPedidoService.listarItens(pedidoId);
     }
 
 

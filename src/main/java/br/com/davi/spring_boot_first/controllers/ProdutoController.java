@@ -50,7 +50,7 @@ public class ProdutoController {
 
     @PutMapping("/editar")
     public EditarProdutoResponse editarQuantidade(
-        @RequestBody EditarProdutoRequest editarProdutoRequest
+        @Valid @RequestBody EditarProdutoRequest editarProdutoRequest
     )
     {
         return editarProdutoService.editar(
