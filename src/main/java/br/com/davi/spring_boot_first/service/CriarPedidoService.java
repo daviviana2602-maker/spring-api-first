@@ -6,6 +6,7 @@ import br.com.davi.spring_boot_first.entity.UsuarioEntity;
 import br.com.davi.spring_boot_first.enums.PedidoStatusEnum;
 import br.com.davi.spring_boot_first.repository.PedidoRepository;
 import br.com.davi.spring_boot_first.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,9 +33,7 @@ public class CriarPedidoService {
     }
 
 
-
-
-
+    @Transactional
     public PedidoResponse criarPedido(Long usuarioId){
 
         List<PedidoEntity> pedidos = pedidoRepository.findByUsuarioId(usuarioId);

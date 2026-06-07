@@ -2,6 +2,7 @@ package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.repository.ProdutoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -18,6 +19,7 @@ public class DeletarProdutoService {
     }
 
 
+    @Transactional
     private ProdutoEntity buscarPorId(Long id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));

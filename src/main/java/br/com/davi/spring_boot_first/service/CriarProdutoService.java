@@ -3,6 +3,7 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.repository.ProdutoRepository;
 import br.com.davi.spring_boot_first.dto.response.CriarProdutoResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,8 +21,8 @@ public class CriarProdutoService {
     }
 
 
+    @Transactional
     public CriarProdutoResponse criarNovoProduto(String nome, BigDecimal preco, int quantidade) {
-
 
         if (nome.isBlank()) {
             throw new ResponseStatusException(

@@ -3,6 +3,7 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.entity.ProdutoEntity;
 import br.com.davi.spring_boot_first.repository.ProdutoRepository;
 import br.com.davi.spring_boot_first.dto.response.EditarProdutoResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,6 +29,7 @@ public class EditarProdutoService {
     }
 
 
+    @Transactional
     public EditarProdutoResponse editar(long id, String nome, BigDecimal preco, Integer quantidade) {
 
 

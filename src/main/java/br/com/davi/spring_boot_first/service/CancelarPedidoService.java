@@ -5,6 +5,7 @@ import br.com.davi.spring_boot_first.entity.PedidoEntity;
 import br.com.davi.spring_boot_first.enums.PedidoStatusEnum;
 import br.com.davi.spring_boot_first.repository.CarrinhoRepository;
 import br.com.davi.spring_boot_first.repository.PedidoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CancelarPedidoService {
     }
 
 
+    @Transactional
     public Long cancelarPedido(Long pedidoId) {
 
         PedidoEntity pedido = buscarPedidoId(pedidoId);
