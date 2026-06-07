@@ -1,0 +1,52 @@
+package br.com.davi.spring_boot_first.service;
+
+import br.com.davi.spring_boot_first.entity.CartEntity;
+import br.com.davi.spring_boot_first.entity.OrderEntity;
+import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
+import br.com.davi.spring_boot_first.repository.CartRepository;
+import br.com.davi.spring_boot_first.repository.OrderRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
+@Service
+public class CancelOrderService {
+
+    private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
+
+
+    public CancelOrderService(OrderRepository orderRepository, CartRepository cartRepository) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+    }
+
+
+    private OrderEntity findOrderId(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("order not found"));
+    }
+
+
+    @Transactional
+    public Long cancelOrder(Long orderId) {
+
+        OrderEntity order = findOrderId(orderId);
+
+        order.setStatus(OrderStatusEnum.CANCELED);
+        orderRepository.save(order);
+
+
+        List<CartEntity> cart = cartRepository.findByOrderId(orderId);
+
+        for (CartEntity item : cart) {
+            cartRepository.delete(item);
+        }
+
+       return orderId;
+
+    }
+
+}

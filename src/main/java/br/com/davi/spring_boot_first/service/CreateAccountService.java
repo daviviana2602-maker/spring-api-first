@@ -1,0 +1,49 @@
+package br.com.davi.spring_boot_first.service;
+
+import br.com.davi.spring_boot_first.dto.response.CreateAccountResponse;
+import br.com.davi.spring_boot_first.entity.UserEntity;
+import br.com.davi.spring_boot_first.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class CreateAccountService {
+
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+
+    public CreateAccountService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
+    @Transactional
+    public CreateAccountResponse createAccount(String name, String email, String password) {
+
+
+        UserEntity user = new UserEntity();
+
+        user.setName(name);
+        user.setEmail(email);
+
+        String passwordHash = passwordEncoder.encode(password);
+        user.setPassword(passwordHash);
+
+
+        userRepository.save(user);
+
+
+        return new CreateAccountResponse(
+            user.getId(),
+            user.getName(),
+            user.getEmail()
+        );
+
+    }
+
+}

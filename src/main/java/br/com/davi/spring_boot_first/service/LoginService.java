@@ -1,40 +1,47 @@
 package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.dto.response.LoginResponse;
-import br.com.davi.spring_boot_first.entity.UsuarioEntity;
-import br.com.davi.spring_boot_first.repository.UsuarioRepository;
+import br.com.davi.spring_boot_first.entity.UserEntity;
+import br.com.davi.spring_boot_first.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
 public class LoginService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
 
-    public LoginService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
+    public LoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
 
-    public LoginResponse realizarLogin(String email, String senha){
+    private UserEntity findEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found!"));
+    }
 
-        UsuarioEntity usuario = usuarioRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    public LoginResponse systemLogin(String email, String senha){
+
+        UserEntity user = findEmail(email);
 
 
-        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
-            throw new RuntimeException("Senha incorreta");
+        if (!passwordEncoder.matches(senha, user.getPassword())) {
+            throw new RuntimeException("wrong email or password");
         }
 
 
         return new LoginResponse(
-            usuario.getId(),
-            usuario.getNome(),
-            usuario.getEmail()
+            user.getId(),
+            user.getName(),
+            user.getEmail()
         );
 
     }

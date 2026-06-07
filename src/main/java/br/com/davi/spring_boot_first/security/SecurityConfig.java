@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()   // libera todas as rotas da API
+                        .anyRequest().permitAll()   // release all API routes (Swagger)
                 );
 
         return http.build();

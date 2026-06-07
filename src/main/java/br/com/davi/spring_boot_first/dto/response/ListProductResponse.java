@@ -4,13 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
+
 @AllArgsConstructor
 
 
-public class LoginResponse {
+public class ListProductResponse {
     private Long id;
     private String name;
-    private String email;
+    private BigDecimal price;
+    private Integer quantity;
 }
