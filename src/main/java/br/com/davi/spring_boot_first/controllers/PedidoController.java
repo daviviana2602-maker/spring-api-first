@@ -5,7 +5,6 @@ import br.com.davi.spring_boot_first.dto.request.CarrinhoRequest;
 import br.com.davi.spring_boot_first.dto.response.CarrinhoResponse;
 import br.com.davi.spring_boot_first.dto.response.ConcluirPedidoResponse;
 import br.com.davi.spring_boot_first.dto.response.PedidoResponse;
-import br.com.davi.spring_boot_first.entity.ConcluidosEntity;
 import br.com.davi.spring_boot_first.service.CancelarPedidoService;
 import br.com.davi.spring_boot_first.service.CarrinhoService;
 import br.com.davi.spring_boot_first.service.ConcluirPedidoService;

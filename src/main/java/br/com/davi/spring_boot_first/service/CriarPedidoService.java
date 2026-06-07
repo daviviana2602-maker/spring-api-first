@@ -32,14 +32,17 @@ public class CriarPedidoService {
     }
 
 
+
+
+
     public PedidoResponse criarPedido(Long usuarioId){
 
-        List<PedidoEntity> produtos = pedidoRepository.findByUsuarioId(usuarioId);
+        List<PedidoEntity> pedidos = pedidoRepository.findByUsuarioId(usuarioId);
 
 
-        for (PedidoEntity p : produtos){
+        for (PedidoEntity p : pedidos){
 
-            if (p.getStatus().equals("PENDENTE")) {
+            if (p.getStatus().equals(PedidoStatusEnum.PENDENTE)) {
 
                 throw new ResponseStatusException(
                         HttpStatus.CONFLICT
@@ -60,7 +63,7 @@ public class CriarPedidoService {
         pedidoRepository.save(pedido);
 
         return new PedidoResponse(
-            usuario.getId(),
+            pedido.getId(),
             pedido.getUsuarioId(),
             usuario.getNome(),
             pedido.getStatus()
