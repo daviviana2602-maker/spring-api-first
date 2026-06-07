@@ -10,13 +10,13 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor    // permite construir no formato de entity ou DTO passando argumentos necessários
+@AllArgsConstructor
 @NoArgsConstructor
 
 
 public class UsuarioEntity {
 
-    @Id     // mostra que é a chave primária
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -13,4 +13,6 @@ public interface CarrinhoRepository extends JpaRepository<CarrinhoEntity, Long> 
 
     List<CarrinhoEntity> findByPedidoId(Long pedidoId);
 
+    void deleteByPedidoId(Long pedidoId);
+
 }

@@ -11,13 +11,13 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor    // permite construir no formato de entity ou DTO passando argumentos necessários
+@AllArgsConstructor
 @NoArgsConstructor
 
 
 public class ProdutoEntity {
 
-    @Id     // mostra que é a chave primária
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -25,7 +25,7 @@ public class ProdutoEntity {
     private String nome;
 
     @Column(nullable = false)
-    private BigDecimal preco;   // precisão exata, não perde casas decimais
+    private BigDecimal preco;
 
     @Column(nullable = false)
     private Integer quantidade;

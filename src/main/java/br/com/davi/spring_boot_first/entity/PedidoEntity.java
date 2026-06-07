@@ -12,13 +12,13 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor    // permite construir no formato de entity ou DTO passando argumentos necessários
+@AllArgsConstructor
 @NoArgsConstructor
 
 
 public class PedidoEntity {
 
-    @Id     // mostra que é a chave primária
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,7 +26,7 @@ public class PedidoEntity {
     private Long usuarioId;                             // deixando camelCase pro Java
 
     @Column(nullable = false)
-    private BigDecimal preco  = BigDecimal.ZERO;   // precisão exata, não perde casas decimais
+    private BigDecimal preco  = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)    // salvar como TEXTO (nome do enum), não como número
     @Column(nullable = false)
