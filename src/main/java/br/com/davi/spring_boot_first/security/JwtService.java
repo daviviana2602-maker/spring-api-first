@@ -1,6 +1,7 @@
 package br.com.davi.spring_boot_first.security;
 
 import br.com.davi.spring_boot_first.enums.RoleEnum;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -27,17 +28,33 @@ public class JwtService {
     }
 
 
+    public JwtDataFormat extractClaims(String token) {
+
+        Claims claims = Jwts.parser()
+                .verifyWith(getKey())       // validate with the key
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();              // extract the body of token
+
+        return new JwtDataFormat(
+            claims.getSubject(),
+            claims.get("role", String.class)    // transform unknown object to String
+        );
+
+    }
+
+
     public String generateToken(Long userId, RoleEnum role) {
 
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationMinutes * 60 * 1000);
 
         return Jwts.builder()
-                .subject(String.valueOf(userId))      // "sub"
+                .subject(String.valueOf(userId))
                 .claim("role", role)
                 .issuedAt(now)
-                .expiration(expiration)        // exp
-                .signWith(getKey())            // sign with the secret key
+                .expiration(expiration)
+                .signWith(getKey())            // sign with the key
                 .compact();
     }
 }
