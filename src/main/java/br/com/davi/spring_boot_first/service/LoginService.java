@@ -3,6 +3,7 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.dto.response.LoginResponse;
 import br.com.davi.spring_boot_first.entity.UserEntity;
 import br.com.davi.spring_boot_first.repository.UserRepository;
+import br.com.davi.spring_boot_first.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,16 @@ public class LoginService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
 
-    public LoginService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public LoginService(UserRepository userRepository,
+                        PasswordEncoder passwordEncoder,
+                        JwtService jwtService
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
 
@@ -37,11 +43,14 @@ public class LoginService {
             throw new RuntimeException("wrong email or password");
         }
 
+        String token = jwtService.generateToken(user.getId(), user.getRole());
 
         return new LoginResponse(
             user.getId(),
             user.getName(),
-            user.getEmail()
+            user.getEmail(),
+            user.getRole(),
+            token
         );
 
     }
