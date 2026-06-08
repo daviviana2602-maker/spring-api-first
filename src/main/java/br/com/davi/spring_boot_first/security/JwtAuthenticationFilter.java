@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
 
-        String header = request.getHeader("Authorization");    // catch JWT
+        String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         String userId = jwtService.extractClaims(token).getUserId();
-        Object role = jwtService.extractClaims(token).getRole();
+        String role = jwtService.extractClaims(token).getRole();
 
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(   // create the object of the authenticated user

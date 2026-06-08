@@ -7,6 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 
 public class JwtDataFormat {
-    private String userId;  // sub
+    private String userId;
     private String role;
 }

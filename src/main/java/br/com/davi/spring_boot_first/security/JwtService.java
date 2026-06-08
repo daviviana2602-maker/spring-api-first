@@ -31,10 +31,10 @@ public class JwtService {
     public JwtDataFormat extractClaims(String token) {
 
         Claims claims = Jwts.parser()
-                .verifyWith(getKey())       // validate with the key
+                .verifyWith(getKey())
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();              // extract the body of token
+                .getPayload();       // extract the body of token
 
         return new JwtDataFormat(
             claims.getSubject(),
@@ -47,14 +47,14 @@ public class JwtService {
     public String generateToken(Long userId, RoleEnum role) {
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + expirationMinutes * 60 * 1000);
+        Date expiration = new Date(now.getTime() + expirationMinutes * 60 * 1000);   // transform to milliseconds
 
         return Jwts.builder()
                 .subject(String.valueOf(userId))
                 .claim("role", role)
                 .issuedAt(now)
                 .expiration(expiration)
-                .signWith(getKey())            // sign with the key
+                .signWith(getKey())
                 .compact();
     }
 }
