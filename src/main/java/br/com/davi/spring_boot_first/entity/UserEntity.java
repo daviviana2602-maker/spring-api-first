@@ -1,5 +1,6 @@
 package br.com.davi.spring_boot_first.entity;
 
+import br.com.davi.spring_boot_first.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +28,8 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleEnum role;
 }

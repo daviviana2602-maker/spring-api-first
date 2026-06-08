@@ -2,6 +2,7 @@ package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.dto.response.CreateAccountResponse;
 import br.com.davi.spring_boot_first.entity.UserEntity;
+import br.com.davi.spring_boot_first.enums.RoleEnum;
 import br.com.davi.spring_boot_first.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,9 +26,9 @@ public class CreateAccountService {
     @Transactional
     public CreateAccountResponse createAccount(String name, String email, String password) {
 
-
         UserEntity user = new UserEntity();
 
+        user.setRole(RoleEnum.USER);
         user.setName(name);
         user.setEmail(email);
 
@@ -35,13 +36,20 @@ public class CreateAccountService {
         user.setPassword(passwordHash);
 
 
+        userRepository.saveAndFlush(user);
+
+        if (user.getId() == 1) {
+            user.setRole(RoleEnum.ADMIN);
+        }
+
         userRepository.save(user);
 
 
         return new CreateAccountResponse(
             user.getId(),
             user.getName(),
-            user.getEmail()
+            user.getEmail(),
+            user.getRole()
         );
 
     }

@@ -28,7 +28,7 @@ public class OrderEntity {
     @Column(nullable = false)
     private BigDecimal price  = BigDecimal.ZERO;
 
-    @Enumerated(EnumType.STRING)    // save as text (enum name)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatusEnum status;
 }
