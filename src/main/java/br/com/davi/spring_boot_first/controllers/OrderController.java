@@ -6,8 +6,10 @@ import br.com.davi.spring_boot_first.dto.response.CartResponse;
 import br.com.davi.spring_boot_first.dto.response.ConcludeOrderResponse;
 import br.com.davi.spring_boot_first.dto.response.OrderResponse;
 import br.com.davi.spring_boot_first.service.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class OrderController {
 
 
     @PostMapping("/create/{userId}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     public OrderResponse generateOrder(
         @PathVariable Long userId
     )
@@ -37,6 +41,8 @@ public class OrderController {
 
 
     @PostMapping("/items")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     public CartResponse Cart(
         @Valid @RequestBody CartRequest cartRequest
     )
@@ -50,6 +56,8 @@ public class OrderController {
 
 
     @PostMapping("/cancel/{orderId}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     public Long excludeOrder(
         @PathVariable Long orderId
     )
@@ -59,6 +67,8 @@ public class OrderController {
 
 
     @PostMapping("/conclude/{orderId}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     public List<ConcludeOrderResponse> buyOrder(
         @PathVariable Long orderId
     )
@@ -68,6 +78,8 @@ public class OrderController {
 
 
     @GetMapping("/listar/{orderId}")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearerAuth")
     public List<CartResponse> listOrder(
         @PathVariable Long orderId
     )

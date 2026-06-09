@@ -9,11 +9,12 @@ import br.com.davi.spring_boot_first.service.CreateProductService;
 import br.com.davi.spring_boot_first.service.DeleteProductService;
 import br.com.davi.spring_boot_first.service.EditProductService;
 import br.com.davi.spring_boot_first.service.ListProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 
 
 @RestController
@@ -31,6 +32,8 @@ public class ProductController {
 
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
     public CreateProductResponse createProduct(
             @Valid @RequestBody CreateProductRequest createProductRequest
     )
@@ -49,6 +52,8 @@ public class ProductController {
 
 
     @PutMapping("/edit")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
     public EditProductResponse edit(
         @Valid @RequestBody EditProductRequest editProductRequest
     )
@@ -62,6 +67,8 @@ public class ProductController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
     public Long removeProduct(
         @PathVariable Long id
     )
