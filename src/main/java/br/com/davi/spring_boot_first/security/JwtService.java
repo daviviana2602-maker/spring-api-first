@@ -36,6 +36,7 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();       // extract the body of token
 
+
         return new JwtDataFormat(
             claims.getSubject(),
             claims.get("role", String.class)    // transform unknown object to String

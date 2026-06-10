@@ -5,6 +5,7 @@ import br.com.davi.spring_boot_first.entity.OrderEntity;
 import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
 import br.com.davi.spring_boot_first.repository.CartRepository;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
+import br.com.davi.spring_boot_first.security.OwnershipService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,15 @@ public class CancelOrderService {
 
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
+    private final OwnershipService ownershipService;
 
 
-    public CancelOrderService(OrderRepository orderRepository, CartRepository cartRepository) {
+    public CancelOrderService(OrderRepository orderRepository,
+                              CartRepository cartRepository,
+                              OwnershipService ownershipService) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
+        this.ownershipService = ownershipService;
     }
 
 
@@ -34,6 +39,9 @@ public class CancelOrderService {
     public Long cancelOrder(Long orderId) {
 
         OrderEntity order = findOrderId(orderId);
+
+        ownershipService.checkOwnership(order.getUserId());
+
 
         order.setStatus(OrderStatusEnum.CANCELED);
         orderRepository.save(order);

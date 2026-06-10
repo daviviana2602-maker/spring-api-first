@@ -8,6 +8,8 @@ import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
 import br.com.davi.spring_boot_first.repository.CartRepository;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
 import br.com.davi.spring_boot_first.repository.ProductRepository;
+import br.com.davi.spring_boot_first.repository.UserRepository;
+import br.com.davi.spring_boot_first.security.OwnershipService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,17 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final OwnershipService ownershipService;
 
 
     public CartService(CartRepository cartRepository,
                        ProductRepository productRepository,
-                       OrderRepository orderRepository) {
+                       OrderRepository orderRepository,
+                       OwnershipService ownershipService) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
+        this.ownershipService = ownershipService;
     }
 
 
@@ -54,6 +59,8 @@ public class CartService {
     public CartResponse editCart(Long orderId, Long productId, Integer quantity) {
 
         OrderEntity order = findOrderId(orderId);
+
+        ownershipService.checkOwnership(order.getUserId());
 
 
         if (order.getStatus() == OrderStatusEnum.CANCELED || order.getStatus() == OrderStatusEnum.CONCLUDED) {

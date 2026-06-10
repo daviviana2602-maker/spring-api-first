@@ -8,6 +8,7 @@ import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
 import br.com.davi.spring_boot_first.repository.CartRepository;
 import br.com.davi.spring_boot_first.repository.ConcludedRepository;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
+import br.com.davi.spring_boot_first.security.OwnershipService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,17 @@ public class ConcludeOrderService {
     private final ConcludedRepository concludedRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final OwnershipService ownershipService;
 
 
     public ConcludeOrderService(ConcludedRepository concludedRepository,
                                 CartRepository cartRepository,
-                                OrderRepository orderRepository) {
+                                OrderRepository orderRepository,
+                                OwnershipService ownershipService) {
         this.concludedRepository = concludedRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
+        this.ownershipService = ownershipService;
     }
 
 
@@ -43,6 +47,9 @@ public class ConcludeOrderService {
 
         OrderEntity order = findOrderId(orderId);
 
+        ownershipService.checkOwnership(order.getUserId());
+
+        
         order.setStatus(OrderStatusEnum.CONCLUDED);
         orderRepository.save(order);
 

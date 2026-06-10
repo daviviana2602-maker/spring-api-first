@@ -41,8 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = header.replace("Bearer ", "");
 
-
-        String userId = jwtService.extractClaims(token).getUserId();
+        Long userId = Long.valueOf(jwtService.extractClaims(token).getUserId());
         String role = jwtService.extractClaims(token).getRole();
 
 

@@ -6,6 +6,7 @@ import br.com.davi.spring_boot_first.entity.UserEntity;
 import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
 import br.com.davi.spring_boot_first.repository.UserRepository;
+import br.com.davi.spring_boot_first.security.OwnershipService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,16 @@ public class CreateOrderService {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final OwnershipService ownershipService;
 
 
-    public CreateOrderService(OrderRepository orderRepository, UserRepository userRepository) {
+    public CreateOrderService(OrderRepository orderRepository,
+                              UserRepository userRepository,
+                              OwnershipService ownershipService)
+    {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+        this.ownershipService = ownershipService;
     }
 
 
@@ -35,6 +41,9 @@ public class CreateOrderService {
 
     @Transactional
     public OrderResponse createOrder(Long userId){
+
+        ownershipService.checkOwnership(userId);
+
 
         List<OrderEntity> orders = orderRepository.findByUserId(userId);
 
