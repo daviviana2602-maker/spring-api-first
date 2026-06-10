@@ -43,14 +43,16 @@ public class LoginService {
             throw new RuntimeException("wrong email or password");
         }
 
-        String token = jwtService.generateToken(user.getId(), user.getRole());
+        String accessToken = jwtService.generateAccessToken(user.getId(), user.getRole());
+        String refreshToken = jwtService.generateRefreshToken(user.getId(), user.getRole());
 
         return new LoginResponse(
             user.getId(),
             user.getName(),
             user.getEmail(),
             user.getRole(),
-            token
+            accessToken,
+            refreshToken
         );
 
     }

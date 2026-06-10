@@ -6,12 +6,11 @@ import br.com.davi.spring_boot_first.dto.response.CreateAccountResponse;
 import br.com.davi.spring_boot_first.dto.response.LoginResponse;
 import br.com.davi.spring_boot_first.service.CreateAccountService;
 import br.com.davi.spring_boot_first.service.LoginService;
+import br.com.davi.spring_boot_first.service.TokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -19,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 
 
-public class UserController {
+public class AuthController {
 
     private final CreateAccountService createAccountService;
     private final LoginService loginService;
+    private final TokenService tokenService;
 
 
     @PostMapping("/create")
@@ -47,6 +47,15 @@ public class UserController {
             loginRequest.getEmail(),
             loginRequest.getPassword()
         );
+    }
+
+
+    @PostMapping("/{refreshToken}")
+    public String token(
+        @PathVariable String refreshToken
+    )
+    {
+        return tokenService.refreshAccessToken(refreshToken);
     }
 
 }

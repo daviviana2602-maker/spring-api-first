@@ -19,8 +19,11 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
-    private long expirationMinutes;
+    @Value("${jwt.accessExpiration}")
+    private long accessExpirationMinutes;
+
+    @Value("${jwt.refreshExpiration}")
+    private long refreshExpirationMinutes;
 
 
     private SecretKey getKey() {
@@ -39,16 +42,16 @@ public class JwtService {
 
         return new JwtDataFormat(
             claims.getSubject(),
-            claims.get("role", String.class)    // transform unknown object to String
+            claims.get("role", String.class)
         );
 
     }
 
 
-    public String generateToken(Long userId, RoleEnum role) {
+    public String generateAccessToken(Long userId, RoleEnum role) {
 
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + expirationMinutes * 60 * 1000);   // transform to milliseconds
+        Date expiration = new Date(now.getTime() + accessExpirationMinutes * 60 * 1000);
 
         return Jwts.builder()
                 .subject(String.valueOf(userId))
@@ -58,4 +61,20 @@ public class JwtService {
                 .signWith(getKey())
                 .compact();
     }
+
+
+    public String generateRefreshToken(Long userId, RoleEnum role) {
+
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + refreshExpirationMinutes * 60 * 1000);
+
+        return Jwts.builder()
+                .subject(String.valueOf(userId))
+                .claim("role", role)
+                .issuedAt(now)
+                .expiration(expiration)
+                .signWith(getKey())
+                .compact();
+    }
+
 }
