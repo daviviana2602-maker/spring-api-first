@@ -5,6 +5,9 @@ import br.com.davi.spring_boot_first.entity.CartEntity;
 import br.com.davi.spring_boot_first.entity.OrderEntity;
 import br.com.davi.spring_boot_first.entity.ProductEntity;
 import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
+import br.com.davi.spring_boot_first.exception.BadRequestException;
+import br.com.davi.spring_boot_first.exception.ConflictException;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.CartRepository;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
 import br.com.davi.spring_boot_first.repository.ProductRepository;
@@ -40,13 +43,13 @@ public class CartService {
 
     private OrderEntity findOrderId(Long orderId) {
         return orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("order not found"));
+                .orElseThrow(() -> new NotFoundException("order not found"));
     }
 
 
     private ProductEntity findProductId(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("product not found"));
+                .orElseThrow(() -> new NotFoundException("product not found"));
     }
 
     // discovering if the item already exists in the order
@@ -64,9 +67,7 @@ public class CartService {
 
 
         if (order.getStatus() == OrderStatusEnum.CANCELED || order.getStatus() == OrderStatusEnum.CONCLUDED) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT
-            );
+            throw new ConflictException("order status is " + order.getStatus());
         }
 
 
@@ -85,9 +86,7 @@ public class CartService {
             cart.setQuantity(cart.getQuantity() + quantity);
 
             if (cart.getQuantity() < 0) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST
-                );
+                throw new BadRequestException("quantity is negative");
             }
 
         }
@@ -95,9 +94,7 @@ public class CartService {
             cart = new CartEntity();
 
             if (quantity < 1) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST
-                );
+                throw new BadRequestException("quantity must be greater than 0");
             }
 
             cart.setQuantity(quantity);

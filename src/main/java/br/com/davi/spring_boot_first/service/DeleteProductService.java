@@ -1,6 +1,7 @@
 package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.entity.ProductEntity;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class DeleteProductService {
 
     private ProductEntity findId(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
 

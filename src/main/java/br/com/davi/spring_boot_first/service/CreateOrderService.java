@@ -4,6 +4,8 @@ import br.com.davi.spring_boot_first.dto.response.OrderResponse;
 import br.com.davi.spring_boot_first.entity.OrderEntity;
 import br.com.davi.spring_boot_first.entity.UserEntity;
 import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
+import br.com.davi.spring_boot_first.exception.ConflictException;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
 import br.com.davi.spring_boot_first.repository.UserRepository;
 import br.com.davi.spring_boot_first.security.OwnershipService;
@@ -35,7 +37,7 @@ public class CreateOrderService {
 
     private UserEntity findId(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("user not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
 
@@ -52,9 +54,7 @@ public class CreateOrderService {
 
             if (o.getStatus().equals(OrderStatusEnum.PENDING)) {
 
-                throw new ResponseStatusException(
-                        HttpStatus.CONFLICT
-                );
+                throw new ConflictException("You already have an order pending");
 
             }
         }

@@ -3,6 +3,7 @@ package br.com.davi.spring_boot_first.service;
 import br.com.davi.spring_boot_first.entity.CartEntity;
 import br.com.davi.spring_boot_first.entity.OrderEntity;
 import br.com.davi.spring_boot_first.enums.OrderStatusEnum;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.CartRepository;
 import br.com.davi.spring_boot_first.repository.OrderRepository;
 import br.com.davi.spring_boot_first.security.OwnershipService;
@@ -31,7 +32,7 @@ public class CancelOrderService {
 
     private OrderEntity findOrderId(Long orderId) {
         return orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("order not found"));
+                .orElseThrow(() -> new NotFoundException("order not found"));
     }
 
 

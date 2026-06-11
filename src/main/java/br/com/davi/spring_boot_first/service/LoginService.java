@@ -2,6 +2,8 @@ package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.dto.response.LoginResponse;
 import br.com.davi.spring_boot_first.entity.UserEntity;
+import br.com.davi.spring_boot_first.exception.BadRequestException;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.UserRepository;
 import br.com.davi.spring_boot_first.security.JwtService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +32,7 @@ public class LoginService {
 
     private UserEntity findEmail(String email) {
         return userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found!"));
+            .orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
 
@@ -40,7 +42,7 @@ public class LoginService {
 
 
         if (!passwordEncoder.matches(senha, user.getPassword())) {
-            throw new RuntimeException("wrong email or password");
+            throw new BadRequestException("wrong email or password");
         }
 
         String accessToken = jwtService.generateAccessToken(user.getId(), user.getRole());

@@ -1,6 +1,8 @@
 package br.com.davi.spring_boot_first.service;
 
 import br.com.davi.spring_boot_first.entity.ProductEntity;
+import br.com.davi.spring_boot_first.exception.BadRequestException;
+import br.com.davi.spring_boot_first.exception.NotFoundException;
 import br.com.davi.spring_boot_first.repository.ProductRepository;
 import br.com.davi.spring_boot_first.dto.response.EditProductResponse;
 import jakarta.transaction.Transactional;
@@ -25,7 +27,7 @@ public class EditProductService {
 
     private ProductEntity findId(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
 
@@ -38,9 +40,7 @@ public class EditProductService {
 
         if (name != null) {
             if (name.length() < 3 || name.length() > 50) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST
-                );
+                throw new BadRequestException("Product name needs to be between 3 and 50 characters");
             }
             product.setName(name);
         }
@@ -48,9 +48,7 @@ public class EditProductService {
 
         if (quantity != null) {
             if (quantity + product.getQuantity() < 0 || quantity > 100) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST
-                );
+                throw new BadRequestException("Product quantity needs to be between 0 and 100");
             }
             quantity += product.getQuantity();
             product.setQuantity(quantity);
@@ -59,9 +57,7 @@ public class EditProductService {
 
         if (price != null) {
             if (price.compareTo(BigDecimal.valueOf(5000)) >= 0 || price.compareTo(BigDecimal.ZERO) <= 0) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST
-                );
+                throw new BadRequestException("Product price needs to be between 0 and 5000");
             }
             product.setPrice(price);
         }
@@ -77,4 +73,5 @@ public class EditProductService {
         );
 
     }
+
 }
