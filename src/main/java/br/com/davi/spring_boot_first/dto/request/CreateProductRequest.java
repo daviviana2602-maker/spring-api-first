@@ -16,15 +16,15 @@ import java.math.BigDecimal;
 
 public class CreateProductRequest {
 
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be greater than 0")
     private BigDecimal price;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Quantity is required")
+    @Positive(message = "Quantity must be greater than 0")
     private Integer quantity;
     }

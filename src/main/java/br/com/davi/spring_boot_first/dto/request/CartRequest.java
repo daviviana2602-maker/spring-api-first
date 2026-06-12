@@ -12,12 +12,12 @@ import lombok.Setter;
 
 public class CartRequest {
 
-    @NotNull
+    @NotNull(message = "Order ID is required")
     Long orderId;
 
-    @NotNull
+    @NotNull(message = "Product ID is required")
     Long productId;
 
-    @NotNull
+    @NotNull(message = "Quantity is required")
     Integer quantity;
 }

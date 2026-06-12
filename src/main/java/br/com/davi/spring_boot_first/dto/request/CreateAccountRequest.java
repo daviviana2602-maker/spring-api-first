@@ -12,15 +12,15 @@ import lombok.Setter;
 
 public class CreateAccountRequest {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email format is wrong")
     String email;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "Name is required")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     String name;
 
-    @NotBlank
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "Password is required")
+    @Size(min = 3, max = 50, message = "Password must be between 3 and 50 characters")
     String password;
 }
