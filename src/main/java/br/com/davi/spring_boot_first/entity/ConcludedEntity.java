@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -35,4 +36,7 @@ public class ConcludedEntity {
 
     @Column(name = "full_price", nullable = false)
     private BigDecimal fullPrice  = BigDecimal.ZERO;
+
+    @Column(name = "concluded_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 }

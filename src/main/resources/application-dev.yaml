@@ -4,9 +4,12 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
 
+  flyway:
+    enabled: true
+
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
